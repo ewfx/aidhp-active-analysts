@@ -1,0 +1,106 @@
+<div class="container-fluid vh-100 d-flex p-0">
+
+    <!-- Left Sidebar -->
+    <div class="sidebar bg-dark text-white p-3 d-flex flex-column" style="width: 250px;">
+        <button class="btn btn-primary w-100 mb-3" (click)="startNewChat()">+ New Chat</button>
+        <h5 class="text-white">Chat History</h5>
+        <div class="overflow-auto flex-grow-1">
+            <ul class="list-group">
+                <li *ngFor="let chat of chatHistory" class="list-group-item list-group-item-action"
+                    (click)="loadChat(chat)">
+                    {{ chat | slice:0:30 }}...
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="main-chat d-flex flex-column flex-grow-1 bg-light">
+
+        <!-- Header -->
+        <div class="chat-header p-3  text-white d-flex justify-content-between align-items-center">
+            <h4>AI Chat</h4>
+
+            <!-- Right-Side Header Icons -->
+            <div class="d-flex align-items-center">
+
+                <!-- Notification Icon -->
+                <div class="position-relative">
+                    <button class="btn btn-outline-light btn-sm me-3 position-relative" (click)="toggleNotifications()">
+                        🔔
+                        <span *ngIf="notifications.length > 0"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ notifications.length }}
+                        </span>
+                    </button>
+
+                    <!-- Notification Dropdown -->
+                    <div *ngIf="showNotifications" class="notification-dropdown">
+                        <h6 class="p-2 bg-primary text-white text-center">Notifications</h6>
+                        <ul class="list-group">
+                            <li *ngFor="let notification of notifications" class="list-group-item">
+                                {{ notification.message }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- User Dropdown -->
+                <div class="dropdown">
+                    <button *ngIf="!isLoggedIn" class="btn btn-outline-light btn-sm" (click)="openLoginModal()">👤
+                        Login</button>
+
+                    <button *ngIf="isLoggedIn" class="btn btn-outline-light btn-sm dropdown-toggle" type="button"
+                        id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        👤 {{ userEmail }}
+                    </button>
+
+                    <ul *ngIf="isLoggedIn" class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-danger" (click)="logout()">Logout</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="chat-box flex-grow-1 p-3 overflow-auto" style="background-color: lightgray;">
+            <div *ngFor="let message of messages" class="message p-2 rounded my-2" [ngClass]="{'bg-primary text-white align-self-end': message.isUser, 
+                       'bg-secondary text-white align-self-start': !message.isUser}">
+                {{ message.text }}
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="chat-input p-3 d-flex bg-white">
+            <textarea *ngIf="isClient" [(ngModel)]="newMessage" class="form-control chat-textarea me-2"
+                placeholder="Type a message..." rows="2" (keydown.enter)="sendMessage()">
+</textarea>
+            <button class="btn btn-primary send-btn" (click)="sendMessage()">➤</button>
+        </div>
+
+    </div>
+    <div *ngIf="isLoginModalOpen" class="custom-modal">
+        <div class="custom-modal-content">
+            <span class="custom-close" (click)="closeLoginModal()">&times;</span>
+            <h3>Login</h3>
+            <form (submit)="login(); $event.preventDefault()">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password"
+                        required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
