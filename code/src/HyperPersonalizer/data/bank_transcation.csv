@@ -1,0 +1,11 @@
+Customer_ID,Customer _Name,Date,Transaction Details, WITHDRAWAL AMT , DEPOSIT AMT ,BALANCE AMT
+A1000,Anika,12-Mar-25,Stock Investement, 400.00 ,,
+A1000,Anika,13-Mar-25,Books, 80.00 ,,
+A1000,Anika,14-Mar-25,Cosmetics, 11.10 ,,
+A1000,Anika,15-Mar-25,Bond Purchase," 3,000.00 ",,
+A1000,Anika,16-Mar-25,Lunch, 12.40 ,,
+A1001,Vihaan,12-Mar-25,Wooden Furniture, 349.00 ,,
+A1001,Vihaan,14-Mar-25,Flight Ticket, 844.00 ,,
+A1001,Vihaan,14-Mar-25,Travel Insurance, 72.00 ,,
+A1001,Vihaan,16-Mar-25,Coffee, 2.80 ,,
+A1002,Vanmathi ,13-Mar-25,Cosmetics, 8.65 ,,
