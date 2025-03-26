@@ -4,11 +4,12 @@ import { Modal } from 'bootstrap';
 import { CommonModule } from '@angular/common';
 import { NotificationService } from '../services/notification.service';
 import { ChatService } from '../services/chat.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule], // ✅ Add FormsModule here
+  imports: [CommonModule, FormsModule,HttpClientModule], // ✅ Add FormsModule here
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
@@ -67,13 +68,25 @@ export class ChatComponent {
   sendMessage() {
     if (this.newMessage.trim() && this.currentChatId !== null) {
       this.chatService.addMessage(this.currentChatId, { text: this.newMessage, isUser: true });
+      let response = {response : ''};
+      this.chatService.postData({ text: this.newMessage}).subscribe({
+        next: (data) => {
+          response = data;  // Store the response
+          this.chatService.addMessage(this.currentChatId??0, { text: response?.response, isUser: false });
+        },
+        error: (err) => {
+          
+        }
+      });
+      let data = this.chatService.postData({ text: this.newMessage});
+      //this.chatService.addMessage(this.currentChatId??0, { text: response?.response, isUser: true });
       this.messages = this.chatService.getMessages(this.currentChatId); // Refresh messages
       this.newMessage = '';
 
-      setTimeout(() => {
-        this.chatService.addMessage(this.currentChatId ?? 0, { text: "I am still learning! 😊", isUser: false });
-        this.messages = this.chatService.getMessages(this.currentChatId??0); // Refresh messages
-      }, 1000);
+      // setTimeout(() => {
+      //   this.chatService.addMessage(this.currentChatId ?? 0, { text: "I am still learning! 😊", isUser: false });
+      //   this.messages = this.chatService.getMessages(this.currentChatId??0); // Refresh messages
+      // }, 1000);
     }
   }
 

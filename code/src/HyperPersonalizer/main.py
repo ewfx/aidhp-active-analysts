@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
 from queryModel import generate_text_from_tuned_model
 from retrieval import getPreferences
+from flask_cors import CORS
 import json
 app = Flask(__name__)
-
+CORS(app)
 customerInfo=""
 customerDetails=""
 
