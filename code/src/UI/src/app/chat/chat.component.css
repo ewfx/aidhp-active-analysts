@@ -1,0 +1,174 @@
+/* Global */
+body {
+    background: #343a40;
+    color: white;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    background: #212529;
+    color: white;
+    height: 100vh;
+  }
+  
+  .sidebar h5 {
+    font-size: 1.1rem;
+  }
+  
+  .sidebar .list-group-item {
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .sidebar .list-group-item:hover {
+    background: #495057;
+  }
+  
+  /* Main Chat */
+  .main-chat {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: #2b3035;
+  }
+  
+  /* Header */
+  .chat-header {
+    background: #212529;
+    color: white;
+    border-bottom: 1px solid #495057;
+  }
+  
+  /* Chat Box */
+  .chat-box {
+    overflow-y: auto;
+    height: calc(100vh - 120px);
+  }
+  
+  /* Messages */
+  .message {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    max-width: 75%;
+  }
+  
+  .user-message {
+    background: #007bff;
+    color: white;
+    text-align: right;
+    align-self: flex-end;
+  }
+  
+  .bot-message {
+    background: #495057;
+    color: white;
+    text-align: left;
+    align-self: flex-start;
+  }
+  
+  /* Chat Input */
+  .chat-input {
+    display: flex;
+    gap: 10px;
+    background: #212529;
+    padding: 15px;
+  }
+  
+  .chat-textarea {
+    flex-grow: 1;
+    resize: none;
+    background: #343a40;
+    color: white;
+    border: none;
+    padding: 10px;
+  }
+  
+  .send-btn {
+    min-width: 60px;
+  }
+  
+  /* Custom Modal Styling */
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .custom-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  
+  /* Close Button */
+  .custom-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* Input and Button Styling */
+  input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .notification-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 250px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .notification-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .notification-dropdown .list-group-item {
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .notification-dropdown .list-group-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  
