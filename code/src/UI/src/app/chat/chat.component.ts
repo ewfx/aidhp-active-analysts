@@ -2,6 +2,8 @@ import { FormsModule } from '@angular/forms'; // ✅ Import FormsModule
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Modal } from 'bootstrap';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../services/notification.service';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,37 +16,67 @@ export class ChatComponent {
   isLoggedIn = false;
   userEmail = '';
   isClient = false;
+  isNotificationOpen = false;
+  notifications: string[] = [];
+  showNotifications = false;
+
+  currentChatId: number | null = null;
+  messages: { text: string; isUser: boolean }[] = [];
+  chatHistory: { id: number; summary: string }[] = [];
+
+  newMessage: string = '';
+
+  constructor(private notificationService: NotificationService,private chatService: ChatService) { }
 
   ngOnInit() {
     this.isClient = true; // Ensures the textarea only loads on the client
+    this.notifications = this.notificationService.getNotifications();
+    this.chatHistory = this.chatService.getChatHistory();
+    if (this.chatHistory.length) {
+      this.loadChat(this.chatHistory[0].id); // Load first chat by default
+    }
   }
 
-  newMessage: string = '';
-  messages: { text: string, isUser: boolean }[] = [];
-  chatHistory: string[] = [];
+  loadChat(chatId: number) {
+    this.currentChatId = chatId;
+    this.messages = this.chatService.getMessages(chatId);
+  }
+
+
+  toggleNotifications() {
+    this.isNotificationOpen = !this.isNotificationOpen;
+    if (this.isNotificationOpen) {
+      this.notifications = this.notificationService.getNotifications();
+    }
+  }
+
+  addTestNotification() {
+    this.notificationService.addNotification("🆕 New test notification!");
+    this.notifications = this.notificationService.getNotifications();
+  }
+
+  clearNotifications() {
+    this.notificationService.clearNotifications();
+    this.notifications = [];
+  }
+
+  // newMessage: string = '';
+  // messages: { text: string, isUser: boolean }[] = [];
+  // chatHistory: string[] = [];
 
   sendMessage() {
-    if (this.newMessage.trim()) {
-      this.messages.push({ text: this.newMessage, isUser: true });
-      this.chatHistory.push(this.newMessage);
+    if (this.newMessage.trim() && this.currentChatId !== null) {
+      this.chatService.addMessage(this.currentChatId, { text: this.newMessage, isUser: true });
+      this.messages = this.chatService.getMessages(this.currentChatId); // Refresh messages
       this.newMessage = '';
-  
+
       setTimeout(() => {
-        this.messages.push({ text: 'I am still learning! 😊', isUser: false });
+        this.chatService.addMessage(this.currentChatId ?? 0, { text: "I am still learning! 😊", isUser: false });
+        this.messages = this.chatService.getMessages(this.currentChatId??0); // Refresh messages
       }, 1000);
     }
   }
 
-  showNotifications = false;
-  notifications = [
-    { message: 'New message from Alex' },
-    { message: 'Reminder: Meeting at 3 PM' },
-    { message: 'System Update Available' }
-  ];
-
-  toggleNotifications() {
-    this.showNotifications = !this.showNotifications;
-  }
 
   logout() {
     this.isLoggedIn = false;
@@ -54,12 +86,14 @@ export class ChatComponent {
   }
   
 
-  loadChat(chat: string) {
-    this.messages = [{ text: chat, isUser: true }];
-  }
+  // loadChat(chat: string) {
+  //   this.messages = [{ text: chat, isUser: true }];
+  // }
 
   startNewChat() {
-    this.messages = [];
+    const newChatId = this.chatService.createNewChat();
+    this.chatHistory = this.chatService.getChatHistory(); // Update history list
+    this.loadChat(newChatId);
   }
 
   email: string = '';

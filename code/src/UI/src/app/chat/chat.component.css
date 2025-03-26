@@ -170,5 +170,31 @@ body {
   .notification-dropdown .list-group-item:hover {
     background-color: #f1f1f1;
   }
+
+
+
+  .notification-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 200px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1000;
+  }
+  
+  .notification-item {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    color: black;
+  }
+  
+  .notification-item:last-child {
+    border-bottom: none;
+  }
+  
   
   

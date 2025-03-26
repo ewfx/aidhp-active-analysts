@@ -7,10 +7,10 @@
         <div class="overflow-auto flex-grow-1">
             <ul class="list-group">
                 <li *ngFor="let chat of chatHistory" class="list-group-item list-group-item-action"
-                    (click)="loadChat(chat)">
-                    {{ chat | slice:0:30 }}...
+                    (click)="loadChat(chat.id)">
+                  {{ chat.summary }}
                 </li>
-            </ul>
+              </ul>
         </div>
     </div>
 
@@ -28,21 +28,18 @@
                 <div class="position-relative">
                     <button class="btn btn-outline-light btn-sm me-3 position-relative" (click)="toggleNotifications()">
                         🔔
-                        <span *ngIf="notifications.length > 0"
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{ notifications.length }}
+                        <span *ngIf="notifications.length > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          {{ notifications.length }}
                         </span>
-                    </button>
-
-                    <!-- Notification Dropdown -->
-                    <div *ngIf="showNotifications" class="notification-dropdown">
-                        <h6 class="p-2 bg-primary text-white text-center">Notifications</h6>
-                        <ul class="list-group">
-                            <li *ngFor="let notification of notifications" class="list-group-item">
-                                {{ notification.message }}
-                            </li>
-                        </ul>
-                    </div>
+                      </button>
+                    
+                      <!-- Notification Dropdown -->
+                      <div *ngIf="isNotificationOpen" class="notification-dropdown">
+                        <div *ngFor="let notification of notifications" class="notification-item">
+                          {{ notification }}
+                        </div>
+                        <button class="btn btn-sm btn-danger w-100 mt-2" (click)="clearNotifications()">Clear All</button>
+                      </div>
                 </div>
 
                 <!-- User Dropdown -->
