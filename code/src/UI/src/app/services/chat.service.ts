@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -6,8 +8,9 @@ import { Injectable } from '@angular/core';
 export class ChatService {
   private chats: { id: number; messages: { text: string; isUser: boolean }[] }[] = [];
   private chatCounter = 1;
+  private apiUrl = 'http://127.0.0.1:8000/';
 
-  constructor() {
+  constructor(private http: HttpClient) {
     // Initialize with a dummy chat history
     this.chats.push({
       id: this.chatCounter,
@@ -45,5 +48,9 @@ export class ChatService {
     if (chat) {
       chat.messages.push(message);
     }
+  }
+
+  postData(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'chat', data);
   }
 }

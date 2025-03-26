@@ -17,3 +17,4 @@ def generate_text_from_tuned_model(prompt):
       print(f"An error occurred: {e}")
       return None
 
+generate_text_from_tuned_model("hi")
